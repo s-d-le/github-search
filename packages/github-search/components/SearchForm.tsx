@@ -12,10 +12,14 @@ type FormInputs = {
 
 export default function SearchForm() {
   const [error, setError] = useState<string | null>(null);
-  const [users, setUsers] = useState<GitHubUser[]>([]);
+  const [users, setUsers] = useState<GitHubUser[] | null>(null);
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const { register, handleSubmit } = useForm<FormInputs>();
+  const {
+    register,
+    handleSubmit,
+    formState: { errors: formErrors },
+  } = useForm<FormInputs>();
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
     setIsLoading(true);
@@ -32,6 +36,16 @@ export default function SearchForm() {
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const renderContent = () => {
+    if (formErrors.username)
+      return <p className={styles.error}>{formErrors.username.message}</p>;
+    if (isLoading) return <p>Loading...</p>;
+    if (error) return <p className={styles.error}>{error}</p>;
+    if (users && users.length > 0) return <UsersList users={users} />;
+    if (users && users.length === 0) return <p>No users found</p>;
+    return null;
   };
 
   return (
@@ -51,14 +65,7 @@ export default function SearchForm() {
         </button>
       </form>
 
-      {error && <p className={styles.error}>{error}</p>}
-      {isLoading ? (
-        <p>Loading...</p>
-      ) : users.length > 0 ? (
-        <UsersList users={users} />
-      ) : (
-        <p>No users found</p>
-      )}
+      {renderContent()}
     </div>
   );
 }
