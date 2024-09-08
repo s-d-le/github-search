@@ -3,7 +3,8 @@ import SearchForm from "../components/SearchForm";
 
 export default function Home() {
   return (
-    <main className={styles.main}>
+    <main className={styles.container}>
+      <h1 className={styles.title}>GitHub User Search</h1>
       <SearchForm />
     </main>
   );

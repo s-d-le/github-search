@@ -3,6 +3,8 @@
 import { useState } from "react";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { GitHubUser } from "@/types/GitHubUser";
+import UsersList from "./UsersList";
+import styles from "./SearchForm.module.css";
 
 type FormInputs = {
   username: string;
@@ -11,7 +13,7 @@ type FormInputs = {
 export default function SearchForm() {
   const [error, setError] = useState<string | null>(null);
   const [users, setUsers] = useState<GitHubUser[]>([]);
-  const [isLoading, setIsLoading] = useState(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const { register, handleSubmit } = useForm<FormInputs>();
 
@@ -34,44 +36,24 @@ export default function SearchForm() {
 
   return (
     <div>
-      <form onSubmit={handleSubmit(onSubmit)}>
-        <div>
-          <input
-            {...register("username", {
-              required: "You must enter an username",
-            })}
-            type="text"
-            placeholder="Looking for a Github user?"
-            alt="Search for a Github user"
-          />
-          <button type="submit" disabled={isLoading}>
-            Search
-          </button>
-        </div>
+      <form onSubmit={handleSubmit(onSubmit)} className={styles.form}>
+        <input
+          {...register("username", {
+            required: "You must enter an username",
+          })}
+          type="text"
+          placeholder="Looking for a Github user?"
+          alt="Search for a Github user"
+          className={styles.input}
+        />
+        <button type="submit" disabled={isLoading} className={styles.button}>
+          Search
+        </button>
       </form>
-      {error && <p className="text-red-500">{error}</p>}
 
-      {users.length > 0 && (
-        <ul>
-          {users.map((user) => (
-            <li key={user.id} className="mb-2">
-              <img
-                src={user.avatar_url}
-                alt={user.login}
-                className="w-10 h-10 rounded-full inline-block mr-2"
-              />
-              <a
-                href={user.html_url}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="text-blue-500 hover:underline"
-              >
-                {user.login}
-              </a>
-            </li>
-          ))}
-        </ul>
-      )}
+      {error && <p className={styles.error}>{error}</p>}
+
+      <UsersList users={users} />
     </div>
   );
 }

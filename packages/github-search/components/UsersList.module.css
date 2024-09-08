@@ -1,0 +1,25 @@
+.list {
+  list-style-type: none;
+  padding: 0;
+}
+
+.listItem {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.avatar {
+  border-radius: 50%;
+  margin-right: 15px;
+  vertical-align: middle;
+}
+
+.link {
+  text-decoration: none;
+  font-size: 20px;
+}
+
+.link:hover {
+  text-decoration: underline;
+}
