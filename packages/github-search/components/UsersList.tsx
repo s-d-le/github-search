@@ -7,8 +7,6 @@ interface UsersListProps {
 }
 
 export default function UsersList({ users }: UsersListProps) {
-  if (users.length === 0) return null;
-
   return (
     <ul className={styles.list}>
       {users.map((user) => (

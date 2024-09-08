@@ -52,8 +52,13 @@ export default function SearchForm() {
       </form>
 
       {error && <p className={styles.error}>{error}</p>}
-
-      <UsersList users={users} />
+      {isLoading ? (
+        <p>Loading...</p>
+      ) : users.length > 0 ? (
+        <UsersList users={users} />
+      ) : (
+        <p>No users found</p>
+      )}
     </div>
   );
 }
