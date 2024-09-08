@@ -10,17 +10,31 @@ type FormInputs = {
 
 export default function SearchForm() {
   const [error, setError] = useState<string | null>(null);
-  const [user, setUser] = useState<any | null>(null);
+  const [users, setUsers] = useState<any | null>(null);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const {
-    register,
-    handleSubmit,
-    formState: { errors, isLoading },
-  } = useForm<FormInputs>();
+  const { register, handleSubmit } = useForm<FormInputs>();
+
+  const onSubmit = async (data: FormData) => {
+    setIsLoading(true);
+    setError(null);
+    try {
+      const res = await fetch(
+        `/api/search-users?q=${encodeURIComponent(data.query)}`
+      );
+      const userData = await res.json();
+      setUsers(userData.items);
+    } catch (err) {
+      setError("An error occurred while fetching users");
+      console.error(err);
+    } finally {
+      setIsLoading(false);
+    }
+  };
 
   return (
     <div>
-      <form action={getUsername}>
+      <form onSubmit={handleSubmit(onSubmit)}>
         <div>
           <input
             {...register("username", {
@@ -35,7 +49,6 @@ export default function SearchForm() {
           </button>
         </div>
       </form>
-      {errors.username && <p>{errors.username.message}</p>}
       {error && <p className="text-red-500">{error}</p>}
     </div>
   );
