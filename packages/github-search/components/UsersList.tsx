@@ -8,19 +8,25 @@ interface UsersListProps {
 
 export default function UsersList({ users }: UsersListProps) {
   return (
-    <ul className={styles.list}>
+    <ul className={styles.list} data-testid="users-list">
       {users &&
         users.map((user) => (
-          <li key={user.id} className={styles.listItem}>
+          <li key={user.id} className={styles.listItem} data-testid="user-item">
             <Image
               src={user.avatar_url}
               alt={user.login}
               className={styles.avatar}
               width={60}
               height={60}
+              data-testid="user-avatar"
             />
             <div>
-              <a href={user.html_url} target="_blank" className={styles.link}>
+              <a
+                href={user.html_url}
+                target="_blank"
+                className={styles.link}
+                data-testid="user-link"
+              >
                 {user.login}
               </a>
               <p>{user.id}</p>

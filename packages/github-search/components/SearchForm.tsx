@@ -57,10 +57,17 @@ export default function SearchForm() {
           })}
           type="text"
           placeholder="Looking for a Github user?"
-          alt="Search for a Github user"
+          aria-label="Search for a Github user"
           className={styles.input}
+          data-testid="search-input"
         />
-        <button type="submit" disabled={isLoading} className={styles.button}>
+        <button
+          type="submit"
+          disabled={isLoading}
+          className={styles.button}
+          aria-label="Search"
+          data-testid="search-button"
+        >
           Search
         </button>
       </form>
