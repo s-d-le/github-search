@@ -14,7 +14,10 @@ type FormInputs = {
 export default function SearchForm() {
   const [error, setError] = useState<string | null>(null);
   const [users, setUsers] = useState<GitHubUser[] | null>(null);
-  const [isLoading, setIsLoading] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState(false);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [totalPages, setTotalPages] = useState(0);
+  const [searchTerm, setSearchTerm] = useState("");
 
   const {
     register,
@@ -22,21 +25,57 @@ export default function SearchForm() {
     formState: { errors: formErrors },
   } = useForm<FormInputs>();
 
-  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+  const fetchUsers = async (username: string, page: number) => {
     setIsLoading(true);
     setError(null);
     try {
       const res = await fetch(
-        `/api/search-users?q=${encodeURIComponent(data.username)}`
+        `/api/search-users?q=${encodeURIComponent(
+          username
+        )}&page=${page}&per_page=30`
       );
       const userData = await res.json();
       setUsers(userData.items);
+      setTotalPages(Math.ceil(userData.total_count / 30));
+      setSearchTerm(username);
     } catch (err) {
       setError("An error occurred while fetching users");
       console.error(err);
     } finally {
       setIsLoading(false);
     }
+  };
+
+  const onSubmit: SubmitHandler<FormInputs> = async (data) => {
+    setCurrentPage(1);
+    await fetchUsers(data.username, 1);
+  };
+
+  const handlePageChange = async (newPage: number) => {
+    setCurrentPage(newPage);
+    await fetchUsers(searchTerm, newPage);
+  };
+
+  const renderPagination = () => {
+    if (!users || users.length === 0) return null;
+
+    return (
+      <div className={styles.pagination}>
+        <Button
+          onClick={() => handlePageChange(currentPage - 1)}
+          disabled={currentPage === 1}
+        >
+          Previous
+        </Button>
+        <span>{`Page ${currentPage} of ${totalPages}`}</span>
+        <Button
+          onClick={() => handlePageChange(currentPage + 1)}
+          disabled={currentPage === totalPages}
+        >
+          Next
+        </Button>
+      </div>
+    );
   };
 
   const renderContent = () => {
@@ -63,15 +102,13 @@ export default function SearchForm() {
           data-testid="search-input"
         />
 
-        <Button
-          title="Search"
-          type="submit"
-          aria-label="Search"
-          data-testid="search-button"
-        />
+        <Button type="submit" aria-label="Search" data-testid="search-button">
+          Search
+        </Button>
       </form>
 
       {renderContent()}
+      {renderPagination()}
     </div>
   );
 }
