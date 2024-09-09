@@ -62,16 +62,13 @@ export default function SearchForm() {
           className={styles.input}
           data-testid="search-input"
         />
-        <button
+
+        <Button
+          title="Search"
           type="submit"
-          disabled={isLoading}
-          className={styles.button}
           aria-label="Search"
           data-testid="search-button"
-        >
-          Search
-        </button>
-        <Button title="UI" type="button" />
+        />
       </form>
 
       {renderContent()}
