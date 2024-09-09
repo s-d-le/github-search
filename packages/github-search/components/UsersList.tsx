@@ -1,4 +1,6 @@
 import Image from "next/image";
+import Link from "next/link";
+
 import { GitHubUser } from "@/types/GitHubUser";
 import styles from "./UsersList.module.css";
 
@@ -21,14 +23,13 @@ export default function UsersList({ users }: UsersListProps) {
               data-testid="user-avatar"
             />
             <div>
-              <a
-                href={user.html_url}
-                target="_blank"
+              <Link
+                href={`/user/${user.login}`}
                 className={styles.link}
                 data-testid="user-link"
               >
                 {user.login}
-              </a>
+              </Link>
               <p>{user.id}</p>
             </div>
           </li>
