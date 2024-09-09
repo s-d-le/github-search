@@ -1,4 +1,4 @@
-# GitHub User Search Monorepo
+# GitHub Search Monorepo
 
 This monorepo contains a Next.js application for searching GitHub profiles and a Playwright test suite for end-to-end testing. It demonstrates the use of Server-Side Rendering (SSR), API routes, and integration with external APIs.
 
@@ -26,17 +26,18 @@ This monorepo contains a Next.js application for searching GitHub profiles and a
 1. Clone the repository:
 
    ```
-   git clone https://github.com/your-username/github-user-search.git
-   cd github-user-search
+   git clone git@github.com:s-d-le/github-search.git
+   cd github-search
    ```
 
 2. Install dependencies:
 
    ```
-   npm install
+   pnpm install
+   cd packages/github-search
    ```
 
-3. Create a `.env.local` file in the root directory and add your GitHub Personal Access Token:
+3. Create a `.env.local` file in `packages/github-search` add your GitHub Personal Access Token:
 
    ```
    GITHUB_TOKEN=your_github_personal_access_token
@@ -51,23 +52,15 @@ This monorepo contains a Next.js application for searching GitHub profiles and a
 
 ### Running the Application
 
-1. Start the development server:
+1. Start the NextJS development server:
 
    ```
-   npm run dev
+   pnpm run dev
    ```
-
-2. Open [http://localhost:3000](http://localhost:3000) in your browser to see the application.
 
 ## API Routes
 
 The application uses a Next.js API route to securely handle requests to the GitHub API. This route is located at `pages/api/search-users.ts`. It accepts a query parameter `q` and returns the search results from the GitHub API.
-
-Example usage:
-
-```
-GET /api/search-users?q=johndoe
-```
 
 ## Server-Side Rendering (SSR)
 
