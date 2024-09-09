@@ -1,6 +1,6 @@
 # GitHub Search Monorepo
 
-This monorepo contains a Next.js application for searching GitHub profiles and a Playwright test suite for end-to-end testing. It demonstrates the use of Server-Side Rendering (SSR), API routes, and integration with external APIs.
+This monorepo contains a Next.js application for searching GitHub profiles, Playwright test suite and a shared ui-components library. It demonstrates the use of Server-Side Rendering (SSR), API routes, shared dependencies and integration with external APIs.
 
 ## Features
 
