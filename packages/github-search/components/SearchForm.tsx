@@ -5,6 +5,7 @@ import { useForm, SubmitHandler } from "react-hook-form";
 import { GitHubUser } from "@/types/GitHubUser";
 import UsersList from "./UsersList";
 import styles from "./SearchForm.module.css";
+import { Button } from "ui-components";
 
 type FormInputs = {
   username: string;
@@ -61,15 +62,13 @@ export default function SearchForm() {
           className={styles.input}
           data-testid="search-input"
         />
-        <button
+
+        <Button
+          title="Search"
           type="submit"
-          disabled={isLoading}
-          className={styles.button}
           aria-label="Search"
           data-testid="search-button"
-        >
-          Search
-        </button>
+        />
       </form>
 
       {renderContent()}

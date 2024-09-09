@@ -13,6 +13,9 @@ importers:
       next:
         specifier: 13.5.6
         version: 13.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1)
+      next-transpile-modules:
+        specifier: ^10.0.1
+        version: 10.0.1
       react:
         specifier: ^18
         version: 18.3.1
@@ -22,6 +25,9 @@ importers:
       react-hook-form:
         specifier: ^7.53.0
         version: 7.53.0(react@18.3.1)
+      ui-components:
+        specifier: workspace:^
+        version: link:../ui-component
     devDependencies:
       '@playwright/test':
         specifier: ^1.47.0
@@ -41,6 +47,25 @@ importers:
       eslint-config-next:
         specifier: 13.5.6
         version: 13.5.6(eslint@8.57.0)(typescript@5.5.4)
+      typescript:
+        specifier: ^5
+        version: 5.5.4
+
+  packages/ui-component:
+    dependencies:
+      react:
+        specifier: ^18
+        version: 18.3.1
+      react-dom:
+        specifier: ^18
+        version: 18.3.1(react@18.3.1)
+    devDependencies:
+      '@types/react':
+        specifier: ^18
+        version: 18.3.5
+      '@types/react-dom':
+        specifier: ^18
+        version: 18.3.0
       typescript:
         specifier: ^5
         version: 5.5.4
@@ -908,6 +933,9 @@ packages:
 
   natural-compare@1.4.0:
     resolution: {integrity: sha512-OWND8ei3VtNC9h7V60qff3SVobHr996CTwgxubgyQYEpg290h9J0buyECNNJexkFm5sOajh5G116RYA1c8ZMSw==}
+
+  next-transpile-modules@10.0.1:
+    resolution: {integrity: sha512-4VX/LCMofxIYAVV58UmD+kr8jQflpLWvas/BQ4Co0qWLWzVh06FoZkECkrX5eEZT6oJFqie6+kfbTA3EZCVtdQ==}
 
   next@13.5.6:
     resolution: {integrity: sha512-Y2wTcTbO4WwEsVb4A8VSnOsG1I9ok+h74q0ZdxkwM3EODqrs4pasq7O0iUxbcS9VtWMicG7f3+HAj0r1+NtKSw==}
@@ -2350,6 +2378,10 @@ snapshots:
   nanoid@3.3.7: {}
 
   natural-compare@1.4.0: {}
+
+  next-transpile-modules@10.0.1:
+    dependencies:
+      enhanced-resolve: 5.17.1
 
   next@13.5.6(react-dom@18.3.1(react@18.3.1))(react@18.3.1):
     dependencies:
