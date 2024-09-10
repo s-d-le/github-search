@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import { useForm, SubmitHandler } from "react-hook-form";
 import { GitHubUser } from "@/types/GitHubUser";
 import UsersList from "./UsersList";
@@ -11,7 +12,11 @@ type FormInputs = {
   username: string;
 };
 
-export default function SearchForm() {
+type SearchFormProps = {
+  initialSearchTerm: string;
+};
+
+export default function SearchForm({ initialSearchTerm }: SearchFormProps) {
   const [error, setError] = useState<string | null>(null);
   const [users, setUsers] = useState<GitHubUser[] | null>(null);
   const [isLoading, setIsLoading] = useState(false);
@@ -19,11 +24,17 @@ export default function SearchForm() {
   const [totalPages, setTotalPages] = useState(0);
   const [searchTerm, setSearchTerm] = useState("");
 
+  const router = useRouter();
+
   const {
     register,
     handleSubmit,
     formState: { errors: formErrors },
-  } = useForm<FormInputs>();
+  } = useForm<FormInputs>({
+    defaultValues: {
+      username: initialSearchTerm,
+    },
+  });
 
   const fetchUsers = async (username: string, page: number) => {
     setIsLoading(true);
@@ -47,8 +58,9 @@ export default function SearchForm() {
   };
 
   const onSubmit: SubmitHandler<FormInputs> = async (data) => {
-    setCurrentPage(1);
-    await fetchUsers(data.username, 1);
+    setIsLoading(true);
+    router.push(`/?q=${encodeURIComponent(data.username)}`);
+    setIsLoading(false);
   };
 
   const handlePageChange = async (newPage: number) => {
