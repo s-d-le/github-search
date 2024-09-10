@@ -1,9 +1,6 @@
-// components/Pagination.tsx
-
 "use client";
 
 import { useRouter } from "next/navigation";
-import styles from "./Pagination.module.css";
 import { Button } from "ui-components";
 
 type PaginationProps = {
@@ -26,7 +23,7 @@ export default function Pagination({
   if (totalPages <= 1) return null;
 
   return (
-    <div className={styles.pagination}>
+    <div>
       <Button
         onClick={() => handlePageChange(currentPage - 1)}
         disabled={currentPage === 1}
