@@ -5,13 +5,11 @@ import Pagination from "@/components/Pagination";
 import UsersList from "@/components/UsersList";
 import { GitHubUser } from "@/types/GitHubUser";
 
-const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
-
 async function getUsers(
   searchTerm: string = "",
   page: number = 1
 ): Promise<{ items: GitHubUser[]; total_count: number }> {
-  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:5271";
 
   const res = await fetch(
     `${baseUrl}/api/get-users?q=${encodeURIComponent(searchTerm)}&page=${page}`
