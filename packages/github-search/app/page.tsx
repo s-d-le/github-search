@@ -11,22 +11,16 @@ async function getUsers(
   searchTerm: string = "",
   page: number = 1
 ): Promise<{ items: GitHubUser[]; total_count: number }> {
-  // If no search term is provided, use a default query that returns some results
-  const query = searchTerm ? searchTerm : "type:user";
+  const baseUrl = process.env.NEXT_PUBLIC_BASE_URL || "http://localhost:3000";
 
   const res = await fetch(
-    `https://api.github.com/search/users?q=${encodeURIComponent(
-      query
-    )}&page=${page}&per_page=30`,
-    {
-      headers: {
-        Authorization: `Bearer ${GITHUB_TOKEN}`,
-      },
-    }
+    `${baseUrl}/api/get-users?q=${encodeURIComponent(searchTerm)}&page=${page}`
   );
+
   if (!res.ok) {
     throw new Error("Failed to fetch users");
   }
+
   return res.json();
 }
 
