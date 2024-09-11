@@ -4,7 +4,7 @@ const GITHUB_TOKEN = process.env.NEXT_PUBLIC_GITHUB_TOKEN;
 
 export async function GET(request: Request) {
   const { searchParams } = new URL(request.url);
-  const query = searchParams.get("q") || "";
+  const query = searchParams.get("q") || "type:user";
   const page = searchParams.get("page") || "1";
 
   const res = await fetch(
