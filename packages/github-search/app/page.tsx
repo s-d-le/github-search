@@ -16,7 +16,8 @@ async function getUsers(
   );
 
   if (!res.ok) {
-    throw new Error("Failed to fetch users");
+    const errorData = await res.json();
+    throw new Error(JSON.stringify(errorData.message));
   }
 
   return res.json();
